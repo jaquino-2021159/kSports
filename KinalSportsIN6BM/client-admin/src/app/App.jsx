@@ -1,9 +1,31 @@
-import { AppRoutes } from "./router/AppRoutes"
+import { useEffect } from "react";
+import { AppRoutes } from "./router/AppRoutes.jsx";
+import { Toaster } from "react-hot-toast"
+import { ConfirmModal } from "../shared/components/ui/ConfirmModa.jsx";
+import { useAuthStore } from "../features/auth/store/authStore.js";
 
 export const App = () => {
-  return(
+  const checkAuth = useAuthStore((state) => state.checkAuth);
+
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
+
+  return (
     <>
-    <AppRoutes />
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          style: {
+            fontFamily: "inherit",
+            fontWeight: 600,
+            fontSize: "1rem",
+            borderRadius: "8px"
+          }
+        }}
+      />
+      <AppRoutes />
+      <ConfirmModal />
     </>
   )
 }
